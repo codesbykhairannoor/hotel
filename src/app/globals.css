@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Warm Luxury Alabaster & Cream Palette (Aman / Four Seasons / AYANA style) */
+    --bg-cream: #FAF8F5;
+    --bg-surface: #FFFFFF;
+    --bg-subtle: #F3EFE8;
+    --bg-warm-sand: #EFEAE0;
+    
+    /* Rich Luxury Gold & Bronze Tokens */
+    --gold-primary: #A37A24;
+    --gold-light: #C89B3C;
+    --gold-bright: #D9A83E;
+    --gold-deep: #7A5914;
+    --gold-border: rgba(163, 122, 36, 0.22);
+    --gold-border-hover: rgba(163, 122, 36, 0.65);
+    --gold-glow: 0 8px 30px rgba(163, 122, 36, 0.18);
+
+    /* Text & Contrast */
+    --text-primary: #15171C;
+    --text-secondary: #40444E;
+    --text-muted: #6B707E;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #FAF8F5;
+    color: #40444E;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: #FAF8F5;
+    font-family: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: var(--font-cormorant), Georgia, serif;
+    letter-spacing: -0.01em;
+    color: #15171C;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom Luxury Gradients & Cards */
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #DFB75A 0%, #C89B3C 50%, #A37A24 100%);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #B88E38 0%, #8F6618 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.luxury-card {
+  background: #FFFFFF;
+  border: 1px solid #E8E3D8;
+  box-shadow: 0 10px 30px -10px rgba(22, 24, 30, 0.05), 0 2px 6px -1px rgba(22, 24, 30, 0.02);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card:hover {
+  border-color: rgba(163, 122, 36, 0.45);
+  box-shadow: 0 20px 40px -12px rgba(163, 122, 36, 0.15);
+  transform: translateY(-3px);
+}
+
+.luxury-card-subtle {
+  background: #FFFFFF;
+  border: 1px solid #EFEAE0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+/* Smooth Touch-Friendly Interactions for Mobile */
+button, select, input, a {
+  touch-action: manipulation;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8D2C4;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A37A24;
 }
