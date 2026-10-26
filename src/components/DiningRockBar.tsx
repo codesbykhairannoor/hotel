@@ -3,14 +3,30 @@
 import React from 'react';
 import { DINING_VENUES } from '@/data/hotelData';
 import { Wine, Clock, Shirt, ArrowRight, Star } from 'lucide-react';
+import { useHotel } from '@/context/HotelContext';
+import { personalizeText } from '@/utils/sanitizeHotelText';
 
 interface DiningRockBarProps {
   onReserveTable: (venueName: string) => void;
 }
 
 export const DiningRockBar: React.FC<DiningRockBarProps> = ({ onReserveTable }) => {
-  const rockBar = DINING_VENUES.find((d) => d.id === 'rock-bar') || DINING_VENUES[0];
-  const otherVenues = DINING_VENUES.filter((d) => d.id !== 'rock-bar');
+  const { hotel } = useHotel();
+  const rawRockBar = DINING_VENUES.find((d) => d.id === 'rock-bar') || DINING_VENUES[0];
+  const rawOtherVenues = DINING_VENUES.filter((d) => d.id !== 'rock-bar');
+
+  const rockBar = {
+    ...rawRockBar,
+    name: personalizeText(rawRockBar.name, hotel.name, hotel.city, hotel.isPersonalized),
+    description: personalizeText(rawRockBar.description, hotel.name, hotel.city, hotel.isPersonalized),
+  };
+
+  const otherVenues = rawOtherVenues.map((v) => ({
+    ...v,
+    name: personalizeText(v.name, hotel.name, hotel.city, hotel.isPersonalized),
+    cuisine: personalizeText(v.cuisine, hotel.name, hotel.city, hotel.isPersonalized),
+    description: personalizeText(v.description, hotel.name, hotel.city, hotel.isPersonalized),
+  }));
 
   return (
     <section id="dining" className="py-20 sm:py-24 bg-[#FAF8F5]">
@@ -27,26 +43,28 @@ export const DiningRockBar: React.FC<DiningRockBarProps> = ({ onReserveTable }) 
             <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 right-4 sm:right-6 flex items-center justify-between">
               <span className="bg-black/80 backdrop-blur-md border border-[#D9A83E]/50 text-[#F3E5AB] text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-lg tracking-wider uppercase flex items-center gap-1.5">
                 <Star className="w-3.5 h-3.5 fill-[#F3E5AB]" />
-                CNN TRAVEL TOP 10 SUNSET BARS GLOBALLY
+                {hotel.isPersonalized ? `PREMIER SUNSET DESTINATION IN ${hotel.city.toUpperCase()}` : 'CNN TRAVEL TOP 10 SUNSET BARS GLOBALLY'}
               </span>
             </div>
           </div>
 
           <div className="lg:col-span-5 p-6 sm:p-10 lg:p-12 flex flex-col justify-center">
             <span className="text-[11px] sm:text-xs font-bold tracking-[0.3em] text-[#855F16] uppercase mb-2 block">
-              THE WORLD-FAMOUS LANDMARK
+              {hotel.isPersonalized ? 'SIGNATURE PANORAMIC LOUNGE' : 'THE WORLD-FAMOUS LANDMARK'}
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-stone-900 font-normal mb-3 sm:mb-4">
               {rockBar.name}
             </h2>
             <p className="text-xs sm:text-sm text-stone-600 leading-relaxed mb-6">
-              Perched 14 meters atop dramatic natural sea cliffs over crashing Indian Ocean tides. Accessed via a customized clifftop inclinator, savour signature botanic mixology and Mediterranean tapas as the sun sinks into the horizon.
+              {hotel.isPersonalized
+                ? `Menghadirkan pemandangan spektakuler dengan suasana santai nan elegan di ${hotel.city}. Nikmati kreasi botanical cocktail terbaik dan sajian tapas gourmet saat matahari terbenam.`
+                : rockBar.description}
             </p>
 
             <div className="space-y-2.5 mb-6 sm:mb-8 text-xs sm:text-sm text-stone-700">
               <div className="flex items-center gap-2.5">
                 <Wine className="w-4 h-4 text-[#855F16] flex-shrink-0" />
-                <span><strong>Direct Guest Privilege:</strong> Priority entrance & VIP sunset seating.</span>
+                <span><strong>Direct Guest Privilege:</strong> Priority entrance &amp; VIP reserved seating.</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Clock className="w-4 h-4 text-[#855F16] flex-shrink-0" />

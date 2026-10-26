@@ -1,30 +1,37 @@
 import React from 'react';
 import { Compass, Ship, Church } from 'lucide-react';
+import { useHotel } from '@/context/HotelContext';
+import { personalizeText } from '@/utils/sanitizeHotelText';
 
 export const CuratedExperiences: React.FC = () => {
+  const { hotel } = useHotel();
+
   const experiences = [
     {
       icon: Compass,
-      title: 'Private Kubu Beach & Cliff Inclinator',
-      tag: 'EXCLUSIVE COVE',
-      description:
-        'Glide down the 35-meter limestone cliffside via an open-air glass inclinator to our secluded white-sand cove, cabanas, and beach club bar.',
+      title: hotel.isPersonalized ? `Bespoke City & Culture Tours` : 'Private Kubu Beach & Cliff Inclinator',
+      tag: hotel.isPersonalized ? 'CURATED ITINERARY' : 'EXCLUSIVE COVE',
+      description: hotel.isPersonalized
+        ? `Explore curated cultural landmarks, culinary hotspots, and premier shopping destinations in ${hotel.city} with private guided arrangements.`
+        : 'Glide down the 35-meter limestone cliffside via an open-air glass inclinator to our secluded white-sand cove, cabanas, and beach club bar.',
       image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
     },
     {
       icon: Ship,
-      title: 'AYANA Lako di’a 54m Luxury Phinisi',
-      tag: 'EXPEDITION YACHT',
-      description:
-        'Set sail aboard our handcrafted 54-meter luxury Phinisi yacht across the islands of Komodo National Park, pink sand beaches, and manta sanctuaries.',
+      title: hotel.isPersonalized ? `VIP Chauffeur & Private Transit` : 'AYANA Lako di’a 54m Luxury Phinisi',
+      tag: hotel.isPersonalized ? 'CHAUFFEUR SERVICE' : 'EXPEDITION YACHT',
+      description: hotel.isPersonalized
+        ? `Enjoy seamless airport limousine transfers and premium private chauffeured vehicles reserved exclusively for registered guests of ${hotel.name}.`
+        : 'Set sail aboard our handcrafted 54-meter luxury Phinisi yacht across the islands of Komodo National Park, pink sand beaches, and manta sanctuaries.',
       image: 'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=crop&w=800&q=80',
     },
     {
       icon: Church,
-      title: 'Tresna & SKY Glass Wedding Chapels',
-      tag: 'SACRED CELEBRATION',
-      description:
-        'Exchange eternal vows suspended 35 meters over the shimmering Indian Ocean inside architectural glass chapels or cantilevered ocean stages.',
+      title: hotel.isPersonalized ? `Grand Celebrations & Ballrooms` : 'Tresna & SKY Glass Wedding Chapels',
+      tag: hotel.isPersonalized ? 'EVENT ENCLAVE' : 'SACRED CELEBRATION',
+      description: hotel.isPersonalized
+        ? `Host intimate wedding receptions, milestone corporate banquets, and grand galas inside elegantly styled event spaces at ${hotel.name}.`
+        : 'Exchange eternal vows suspended 35 meters over the shimmering Indian Ocean inside architectural glass chapels or cantilevered ocean stages.',
       image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
     },
   ];
@@ -38,10 +45,12 @@ export const CuratedExperiences: React.FC = () => {
             CURATED DISCOVERY
           </span>
           <h2 className="font-serif text-3xl sm:text-5xl text-white font-normal mb-4">
-            Beyond Ordinary Luxury
+            {hotel.isPersonalized ? `Experiences at ${hotel.name}` : 'Beyond Ordinary Luxury'}
           </h2>
           <p className="text-sm sm:text-base text-slate-400">
-            From secluded private beaches reached by cliffside inclinators to private Indonesian yacht charters.
+            {hotel.isPersonalized
+              ? `From bespoke chauffeur transits to unforgettable dining and celebration venues in ${hotel.city}.`
+              : 'From secluded private beaches reached by cliffside inclinators to private Indonesian yacht charters.'}
           </p>
         </div>
 

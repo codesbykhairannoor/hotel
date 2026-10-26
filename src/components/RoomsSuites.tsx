@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { ROOMS_DATA, formatCurrency, Room } from '@/data/hotelData';
 import { Maximize2, Bed, Users, Check, Eye } from 'lucide-react';
+import { useHotel } from '@/context/HotelContext';
+import { personalizeText } from '@/utils/sanitizeHotelText';
 
 interface RoomsSuitesProps {
   currentCurrency: string;
@@ -16,11 +18,25 @@ export const RoomsSuites: React.FC<RoomsSuitesProps> = ({
   onSelectRoomForBooking,
   onOpenRoomDetails,
 }) => {
+  const { hotel } = useHotel();
   const [filter, setFilter] = useState<'all' | 'villa' | 'suite' | 'forest'>('all');
 
-  const filteredRooms = filter === 'all' 
+  const rawFilteredRooms = filter === 'all' 
     ? ROOMS_DATA 
     : ROOMS_DATA.filter((r) => r.category === filter);
+
+  const filteredRooms: Room[] = rawFilteredRooms.map((room) => ({
+    ...room,
+    name: personalizeText(room.name, hotel.name, hotel.city, hotel.isPersonalized),
+    property: personalizeText(room.property, hotel.name, hotel.city, hotel.isPersonalized),
+    description: personalizeText(room.description, hotel.name, hotel.city, hotel.isPersonalized),
+    tag: personalizeText(room.tag, hotel.name, hotel.city, hotel.isPersonalized),
+    perk: personalizeText(room.perk, hotel.name, hotel.city, hotel.isPersonalized),
+    amenities: room.amenities.map((a) =>
+      personalizeText(a, hotel.name, hotel.city, hotel.isPersonalized)
+    ),
+  }));
+
 
   return (
     <section id="rooms" className="py-20 sm:py-24 bg-[#F5F1E8] border-t border-[#E8E2D5]">

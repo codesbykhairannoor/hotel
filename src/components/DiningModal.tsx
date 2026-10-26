@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { X, Calendar, Clock, Users, CheckCircle, Utensils } from 'lucide-react';
+import { useHotel } from '@/context/HotelContext';
+import { personalizeText } from '@/utils/sanitizeHotelText';
 
 interface DiningModalProps {
   venueName: string;
@@ -16,7 +18,10 @@ export const DiningModal: React.FC<DiningModalProps> = ({
   onClose,
   onSuccess,
 }) => {
+  const { hotel } = useHotel();
+  const cleanVenueName = personalizeText(venueName, hotel.name, hotel.city, hotel.isPersonalized);
   const [date, setDate] = useState('');
+
   const [time, setTime] = useState('17:30');
   const [guests, setGuests] = useState('2 Guests');
   const [seating, setSeating] = useState('Front Row Cliff Edge');
@@ -62,10 +67,10 @@ export const DiningModal: React.FC<DiningModalProps> = ({
                 CULINARY CONCIERGE
               </span>
               <h3 className="font-serif text-2xl sm:text-3xl text-stone-900 font-normal">
-                Reserve a Table at {venueName}
+                Reserve a Table at {cleanVenueName}
               </h3>
               <p className="text-xs text-stone-600 mt-1">
-                Guaranteed priority table allocation for registered AYANA guests.
+                Guaranteed priority table allocation for registered guests of {hotel.isPersonalized ? hotel.name : 'AYANA'}.
               </p>
             </div>
 

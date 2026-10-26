@@ -204,7 +204,7 @@ Halo Admin ${hotel.name}, mohon konfirmasi ketersediaan kamar untuk tanggal ters
                 onClick={onClose}
                 className="gold-gradient-bg text-black font-bold text-xs px-5 sm:px-6 py-2.5 sm:py-3 rounded transition-all"
               >
-                Back to AYANA Estate
+                Back to {hotel.isPersonalized ? hotel.name : 'AYANA Estate'}
               </button>
             </div>
           </div>
@@ -217,10 +217,10 @@ Halo Admin ${hotel.name}, mohon konfirmasi ketersediaan kamar untuk tanggal ters
                 DIRECT BOOKING PRIVILEGE
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl text-stone-900 font-normal">
-                Reserve Your Clifftop Sanctuary
+                {hotel.isPersonalized ? `Reserve at ${hotel.name}` : 'Reserve Your Clifftop Sanctuary'}
               </h2>
               <p className="text-xs text-stone-600 mt-1">
-                Best Rate Guaranteed with Daily Gourmet Breakfast, $100 Resort Credit & VIP Rock Bar Priority Pass
+                Best Rate Guaranteed with Daily Gourmet Breakfast, $100 Resort Credit &amp; VIP Priority Privileges
               </p>
             </div>
 
@@ -237,11 +237,23 @@ Halo Admin ${hotel.name}, mohon konfirmasi ketersediaan kamar untuk tanggal ters
                     onChange={(e) => setProperty(e.target.value)}
                     className="w-full bg-white border border-[#DCD5C8] rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-900 outline-none focus:border-[#A37A24] cursor-pointer"
                   >
-                    <option value="The Villas at AYANA Resort">The Villas at AYANA Resort (Cliff Edge)</option>
-                    <option value="AYANA Segara Bali">AYANA Segara (Ocean Panoramas)</option>
-                    <option value="AYANA Resort Bali">AYANA Resort (Classic Oceanfront)</option>
-                    <option value="RIMBA by AYANA Bali">RIMBA by AYANA (Forest Canopy)</option>
-                    <option value="AYANA Komodo Waecicu Beach">AYANA Komodo Resort & Phinisi</option>
+                    {hotel.isPersonalized ? (
+                      <>
+                        <option value={hotel.name}>{hotel.name} (Main Property)</option>
+                        <option value="Royal Suites">{hotel.name} — Royal Suites</option>
+                        <option value="Executive Wing">{hotel.name} — Executive Wing</option>
+                        <option value="Garden Sanctuary">{hotel.name} — Garden Sanctuary</option>
+                        <option value="VIP Pavilion">{hotel.name} — VIP Pavilion</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="The Villas at AYANA Resort">The Villas at AYANA Resort (Cliff Edge)</option>
+                        <option value="AYANA Segara Bali">AYANA Segara (Ocean Panoramas)</option>
+                        <option value="AYANA Resort Bali">AYANA Resort (Classic Oceanfront)</option>
+                        <option value="RIMBA by AYANA Bali">RIMBA by AYANA (Forest Canopy)</option>
+                        <option value="AYANA Komodo Waecicu Beach">AYANA Komodo Resort &amp; Phinisi</option>
+                      </>
+                    )}
                   </select>
                 </div>
 

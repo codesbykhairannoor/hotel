@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Calendar, Users, Hotel, ArrowRight, ChevronDown } from 'lucide-react';
+import { useHotel } from '@/context/HotelContext';
 
 interface BookingBarProps {
   onCheckAvailability: (bookingParams: {
@@ -17,9 +18,11 @@ interface BookingBarProps {
 
 export const BookingBar: React.FC<BookingBarProps> = ({
   onCheckAvailability,
-  defaultProperty = 'The Villas at AYANA Resort',
+  defaultProperty,
 }) => {
-  const [property, setProperty] = useState(defaultProperty);
+  const { hotel } = useHotel();
+  const initialProperty = defaultProperty || (hotel.isPersonalized ? hotel.name : 'The Villas at AYANA Resort');
+  const [property, setProperty] = useState(initialProperty);
   const [checkIn, setCheckIn] = useState('2026-11-05');
   const [checkOut, setCheckOut] = useState('2026-11-08');
   const [minDate, setMinDate] = useState('2026-10-26');
@@ -27,6 +30,14 @@ export const BookingBar: React.FC<BookingBarProps> = ({
   const [childrenCount, setChildrenCount] = useState(0);
   const [rooms, setRooms] = useState(1);
   const [showGuestDropdown, setShowGuestDropdown] = useState(false);
+
+  useEffect(() => {
+    if (defaultProperty) {
+      setProperty(defaultProperty);
+    } else if (hotel.isPersonalized) {
+      setProperty(hotel.name);
+    }
+  }, [defaultProperty, hotel]);
 
   useEffect(() => {
     const today = new Date();
@@ -70,11 +81,23 @@ export const BookingBar: React.FC<BookingBarProps> = ({
             onChange={(e) => setProperty(e.target.value)}
             className="bg-transparent text-stone-900 text-sm font-semibold outline-none cursor-pointer truncate py-1"
           >
-            <option value="The Villas at AYANA Resort">The Villas at AYANA (Cliff Edge)</option>
-            <option value="AYANA Segara Bali">AYANA Segara (Ocean Panoramas)</option>
-            <option value="AYANA Resort Bali">AYANA Resort (Classic Oceanfront)</option>
-            <option value="RIMBA by AYANA Bali">RIMBA by AYANA (Forest Canopy)</option>
-            <option value="AYANA Komodo Waecicu Beach">AYANA Komodo & Luxury Phinisi</option>
+            {hotel.isPersonalized ? (
+              <>
+                <option value={hotel.name}>{hotel.name} (Main Property)</option>
+                <option value="Royal Suites">{hotel.name} — Royal Suites</option>
+                <option value="Executive Wing">{hotel.name} — Executive Wing</option>
+                <option value="Garden Sanctuary">{hotel.name} — Garden Sanctuary</option>
+                <option value="VIP Pavilion">{hotel.name} — VIP Pavilion</option>
+              </>
+            ) : (
+              <>
+                <option value="The Villas at AYANA Resort">The Villas at AYANA (Cliff Edge)</option>
+                <option value="AYANA Segara Bali">AYANA Segara (Ocean Panoramas)</option>
+                <option value="AYANA Resort Bali">AYANA Resort (Classic Oceanfront)</option>
+                <option value="RIMBA by AYANA Bali">RIMBA by AYANA (Forest Canopy)</option>
+                <option value="AYANA Komodo Waecicu Beach">AYANA Komodo &amp; Luxury Phinisi</option>
+              </>
+            )}
           </select>
         </div>
 

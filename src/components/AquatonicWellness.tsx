@@ -3,13 +3,23 @@
 import React, { useState } from 'react';
 import { WELLNESS_TREATMENTS } from '@/data/hotelData';
 import { ChevronDown, Droplet, Sparkles, Star } from 'lucide-react';
+import { useHotel } from '@/context/HotelContext';
+import { personalizeText } from '@/utils/sanitizeHotelText';
 
 interface AquatonicWellnessProps {
   onBookSpa: () => void;
 }
 
 export const AquatonicWellness: React.FC<AquatonicWellnessProps> = ({ onBookSpa }) => {
+  const { hotel } = useHotel();
   const [openIndex, setOpenIndex] = useState<number>(0);
+
+  const treatments = WELLNESS_TREATMENTS.map((t) => ({
+    ...t,
+    title: personalizeText(t.title, hotel.name, hotel.city, hotel.isPersonalized),
+    description: personalizeText(t.description, hotel.name, hotel.city, hotel.isPersonalized),
+    benefits: personalizeText(t.benefits, hotel.name, hotel.city, hotel.isPersonalized),
+  }));
 
   return (
     <section id="wellness" className="py-20 sm:py-24 bg-[#F5F1E8] border-t border-[#E8E2D5]">
@@ -18,18 +28,22 @@ export const AquatonicWellness: React.FC<AquatonicWellnessProps> = ({ onBookSpa 
           {/* Left Narrative & Accordion */}
           <div className="lg:col-span-7">
             <span className="text-xs font-bold tracking-[0.3em] text-[#855F16] uppercase block mb-3">
-              HEALING OF THE GODS
+              {hotel.isPersonalized ? 'RESTORATIVE WELLNESS & SPA' : 'HEALING OF THE GODS'}
             </span>
             <h2 className="font-serif text-3xl sm:text-5xl text-stone-900 font-normal mb-4 sm:mb-6">
-              The Aquatonic Seawater Pool & AYANA Spa
+              {hotel.isPersonalized
+                ? `Luxury Hydrotherapy & Wellness Spa — ${hotel.name}`
+                : 'The Aquatonic Seawater Pool & AYANA Spa'}
             </h2>
             <p className="text-xs sm:text-base text-stone-600 leading-relaxed mb-6 sm:mb-8">
-              Experience one of the world’s largest seawater hydrotherapy facilities. Sourced directly from the deep Indian Ocean, heated water is pumped through 12 hydromassage stations featuring 60 micro-bubble jets that deliver deep therapeutic rehabilitation, circulation acceleration, and tension relief.
+              {hotel.isPersonalized
+                ? `Nikmati fasilitas hydrotherapy eksklusif dan perawatan spa menenangkan di ${hotel.name}. Air hangat bertekanan dengan mikrobubble jet dan minyak aromaterapi terapeutik dirancang untuk melancarkan sirkulasi, melepaskan kelelahan, dan mengembalikan energi tubuh.`
+                : 'Experience one of the world’s largest seawater hydrotherapy facilities. Sourced directly from the deep Indian Ocean, heated water is pumped through 12 hydromassage stations featuring 60 micro-bubble jets that deliver deep therapeutic rehabilitation, circulation acceleration, and tension relief.'}
             </p>
 
             {/* Treatment Accordion */}
             <div className="space-y-3 mb-6 sm:mb-8">
-              {WELLNESS_TREATMENTS.map((treatment, idx) => (
+              {treatments.map((treatment, idx) => (
                 <div
                   key={treatment.id}
                   className={`rounded-xl border transition-all duration-300 overflow-hidden bg-white ${

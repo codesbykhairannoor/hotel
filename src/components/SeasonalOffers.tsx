@@ -3,12 +3,25 @@
 import React from 'react';
 import { SPECIAL_OFFERS, SpecialOffer } from '@/data/hotelData';
 import { Check, Sparkles } from 'lucide-react';
+import { useHotel } from '@/context/HotelContext';
+import { personalizeText } from '@/utils/sanitizeHotelText';
 
 interface SeasonalOffersProps {
   onClaimOffer: (offer: SpecialOffer) => void;
 }
 
 export const SeasonalOffers: React.FC<SeasonalOffersProps> = ({ onClaimOffer }) => {
+  const { hotel } = useHotel();
+
+  const offers = SPECIAL_OFFERS.map((offer) => ({
+    ...offer,
+    title: personalizeText(offer.title, hotel.name, hotel.city, hotel.isPersonalized),
+    description: personalizeText(offer.description, hotel.name, hotel.city, hotel.isPersonalized),
+    perks: offer.perks.map((p) =>
+      personalizeText(p, hotel.name, hotel.city, hotel.isPersonalized)
+    ),
+  }));
+
   return (
     <section id="offers" className="py-20 sm:py-24 bg-[#F5F1E8]">
       <div className="max-w-7xl mx-auto px-4">
@@ -33,7 +46,7 @@ export const SeasonalOffers: React.FC<SeasonalOffersProps> = ({ onClaimOffer }) 
 
         {/* 2 Special Offer Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-          {SPECIAL_OFFERS.map((offer) => (
+          {offers.map((offer) => (
             <div
               key={offer.id}
               className="bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-[#E2DBD0] hover:border-[#A37A24]/60 transition-all duration-500 flex flex-col group shadow-sm hover:shadow-xl"

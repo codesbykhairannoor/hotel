@@ -1,29 +1,39 @@
 import React from 'react';
 import { ShieldCheck, Utensils, GlassWater, Sparkles } from 'lucide-react';
+import { useHotel } from '@/context/HotelContext';
 
 export const DirectBenefits: React.FC = () => {
+  const { hotel } = useHotel();
+
   const benefits = [
     {
       icon: ShieldCheck,
       title: 'Best Rate Guarantee',
-      desc: '10% lower than any OTA (Traveloka/Agoda), with free cancellation and price matching.',
+      desc: '10% lower than any OTA (Traveloka/Agoda/Booking), with instant direct confirmation and free cancellation.',
     },
     {
       icon: Utensils,
       title: 'Complimentary Daily Breakfast',
-      desc: 'Sumptuous international and Balinese buffet across 4 signature morning restaurants.',
+      desc: hotel.isPersonalized
+        ? `Sumptuous international and local culinary breakfast buffet served fresh daily at ${hotel.name}.`
+        : 'Sumptuous international and Balinese buffet across 4 signature morning restaurants.',
     },
     {
       icon: GlassWater,
-      title: 'VIP Rock Bar Priority Pass',
-      desc: 'Skip the standard public line with reserved priority cliff seating during golden hour.',
+      title: hotel.isPersonalized ? 'VIP Lounge Priority Access' : 'VIP Rock Bar Priority Pass',
+      desc: hotel.isPersonalized
+        ? 'Skip the queue with reserved priority seating at the signature lounge during golden hour.'
+        : 'Skip the standard public line with reserved priority cliff seating during golden hour.',
     },
     {
       icon: Sparkles,
-      title: '$100 Resort Credit',
-      desc: 'Redeemable across 26 restaurants, the Aquatonic Seawater Pool, and private yacht journeys.',
+      title: '$100 Direct Guest Credit',
+      desc: hotel.isPersonalized
+        ? `Redeemable for dining, wellness spa services, and bespoke room upgrades at ${hotel.name}.`
+        : 'Redeemable across 26 restaurants, the Aquatonic Seawater Pool, and private yacht journeys.',
     },
   ];
+
 
   return (
     <section className="py-14 sm:py-16 bg-[#FAF8F5] border-b border-[#E8E2D5]">

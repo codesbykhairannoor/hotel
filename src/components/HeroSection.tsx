@@ -85,36 +85,73 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Estate Metric Highlights */}
         <div className="inline-flex flex-wrap items-center justify-center gap-4 sm:gap-8 glass-panel-subtle px-6 py-3 rounded-full">
-          <div className="flex items-center gap-2">
-            <span className="font-serif text-2xl font-bold text-[#E5C778]">90</span>
-            <span className="text-[11px] text-slate-300 uppercase tracking-wider text-left leading-tight">
-              Hectares of<br />Sanctuary
-            </span>
-          </div>
-          <div className="hidden sm:block w-[1px] h-6 bg-white/20"></div>
+          {hotel.isPersonalized ? (
+            <>
+              <div className="flex items-center gap-2">
+                <span className="font-serif text-2xl font-bold text-[#E5C778]">⭐ {hotel.rating}</span>
+                <span className="text-[11px] text-slate-300 uppercase tracking-wider text-left leading-tight">
+                  Google Maps<br />Rating
+                </span>
+              </div>
+              <div className="hidden sm:block w-[1px] h-6 bg-white/20"></div>
 
-          <div className="flex items-center gap-2">
-            <span className="font-serif text-2xl font-bold text-[#E5C778]">14</span>
-            <span className="text-[11px] text-slate-300 uppercase tracking-wider text-left leading-tight">
-              Ocean & Forest<br />Resort Pools
-            </span>
-          </div>
-          <div className="hidden sm:block w-[1px] h-6 bg-white/20"></div>
+              <div className="flex items-center gap-2">
+                <span className="font-serif text-2xl font-bold text-[#E5C778]">{hotel.reviews}+</span>
+                <span className="text-[11px] text-slate-300 uppercase tracking-wider text-left leading-tight">
+                  Verified Reviews<br />{hotel.city}
+                </span>
+              </div>
+              <div className="hidden sm:block w-[1px] h-6 bg-white/20"></div>
 
-          <div className="flex items-center gap-2">
-            <span className="font-serif text-2xl font-bold text-[#E5C778]">26</span>
-            <span className="text-[11px] text-slate-300 uppercase tracking-wider text-left leading-tight">
-              Dining Venues<br />& Rock Bar
-            </span>
-          </div>
-          <div className="hidden sm:block w-[1px] h-6 bg-white/20"></div>
+              <div className="flex items-center gap-2">
+                <span className="font-serif text-2xl font-bold text-[#E5C778]">10%</span>
+                <span className="text-[11px] text-slate-300 uppercase tracking-wider text-left leading-tight">
+                  Direct Booking<br />Discount
+                </span>
+              </div>
+              <div className="hidden sm:block w-[1px] h-6 bg-white/20"></div>
 
-          <div className="flex items-center gap-2">
-            <span className="font-serif text-2xl font-bold text-[#E5C778]">#1</span>
-            <span className="text-[11px] text-slate-300 uppercase tracking-wider text-left leading-tight">
-              Resort in Indo<br />(Travel+Leisure)
-            </span>
-          </div>
+              <div className="flex items-center gap-2">
+                <span className="font-serif text-2xl font-bold text-[#E5C778]">24/7</span>
+                <span className="text-[11px] text-slate-300 uppercase tracking-wider text-left leading-tight">
+                  Dedicated Host<br />WhatsApp Desk
+                </span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex items-center gap-2">
+                <span className="font-serif text-2xl font-bold text-[#E5C778]">90</span>
+                <span className="text-[11px] text-slate-300 uppercase tracking-wider text-left leading-tight">
+                  Hectares of<br />Sanctuary
+                </span>
+              </div>
+              <div className="hidden sm:block w-[1px] h-6 bg-white/20"></div>
+
+              <div className="flex items-center gap-2">
+                <span className="font-serif text-2xl font-bold text-[#E5C778]">14</span>
+                <span className="text-[11px] text-slate-300 uppercase tracking-wider text-left leading-tight">
+                  Ocean & Forest<br />Resort Pools
+                </span>
+              </div>
+              <div className="hidden sm:block w-[1px] h-6 bg-white/20"></div>
+
+              <div className="flex items-center gap-2">
+                <span className="font-serif text-2xl font-bold text-[#E5C778]">26</span>
+                <span className="text-[11px] text-slate-300 uppercase tracking-wider text-left leading-tight">
+                  Dining Venues<br />& Rock Bar
+                </span>
+              </div>
+              <div className="hidden sm:block w-[1px] h-6 bg-white/20"></div>
+
+              <div className="flex items-center gap-2">
+                <span className="font-serif text-2xl font-bold text-[#E5C778]">#1</span>
+                <span className="text-[11px] text-slate-300 uppercase tracking-wider text-left leading-tight">
+                  Resort in Indo<br />(Travel+Leisure)
+                </span>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -122,7 +159,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="mt-14 sm:mt-16">
         <BookingBar
           onCheckAvailability={onCheckAvailability}
-          defaultProperty={selectedProperty === 'all' ? 'The Villas at AYANA Resort' : selectedProperty}
+          defaultProperty={selectedProperty === 'all' ? (hotel.isPersonalized ? hotel.name : 'The Villas at AYANA Resort') : selectedProperty}
         />
       </div>
     </section>

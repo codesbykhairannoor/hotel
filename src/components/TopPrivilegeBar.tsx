@@ -3,6 +3,7 @@
 import React from 'react';
 import { Crown, Globe, MapPin } from 'lucide-react';
 import { CURRENCY_RATES } from '@/data/hotelData';
+import { useHotel } from '@/context/HotelContext';
 
 interface TopPrivilegeBarProps {
   currentCurrency: string;
@@ -17,6 +18,8 @@ export const TopPrivilegeBar: React.FC<TopPrivilegeBarProps> = ({
   selectedProperty,
   onPropertyChange,
 }) => {
+  const { hotel } = useHotel();
+
   return (
     <div className="bg-[#EFEAE0] border-b border-[#E2DBD0] text-xs text-stone-700 py-1.5 px-3 sm:px-4 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
@@ -27,10 +30,14 @@ export const TopPrivilegeBar: React.FC<TopPrivilegeBarProps> = ({
             DIRECT PRIVILEGE
           </span>
           <span className="hidden md:inline text-stone-800 text-xs font-medium truncate">
-            Book Direct: Best Rate Guaranteed + Daily Buffet Breakfast + $100 Spa & Dining Credit
+            {hotel.isPersonalized
+              ? `Best Rate Guaranteed at ${hotel.name} • Free Gourmet Breakfast & VIP Direct Privileges in ${hotel.city}`
+              : 'Book Direct: Best Rate Guaranteed + Daily Buffet Breakfast + $100 Spa & Dining Credit'}
           </span>
           <span className="md:hidden text-stone-800 text-[11px] font-medium truncate">
-            Best Rate Guaranteed + Free Breakfast
+            {hotel.isPersonalized
+              ? `Best Rate Guaranteed • ${hotel.name}`
+              : 'Best Rate Guaranteed + Free Breakfast'}
           </span>
         </div>
 
@@ -59,14 +66,26 @@ export const TopPrivilegeBar: React.FC<TopPrivilegeBarProps> = ({
             <select
               value={selectedProperty}
               onChange={(e) => onPropertyChange(e.target.value)}
-              className="bg-transparent text-stone-900 text-xs outline-none cursor-pointer font-medium max-w-[190px] truncate"
+              className="bg-transparent text-stone-900 text-xs outline-none cursor-pointer font-medium max-w-[200px] truncate"
               aria-label="Select Property"
             >
-              <option value="all">AYANA Bali Estate (90 Ha)</option>
-              <option value="The Villas at AYANA Resort">The Villas at AYANA (Cliff)</option>
-              <option value="AYANA Segara Bali">AYANA Segara (Ocean Wing)</option>
-              <option value="RIMBA by AYANA Bali">RIMBA by AYANA (Forest)</option>
-              <option value="AYANA Komodo Waecicu Beach">AYANA Komodo & Yacht</option>
+              {hotel.isPersonalized ? (
+                <>
+                  <option value="all">{hotel.name} — All Wings</option>
+                  <option value="villas">{hotel.name} — Royal Suites</option>
+                  <option value="executive">{hotel.name} — Executive Wing</option>
+                  <option value="garden">{hotel.name} — Garden Sanctuary</option>
+                  <option value="vip">{hotel.name} — VIP Pavilion</option>
+                </>
+              ) : (
+                <>
+                  <option value="all">AYANA Bali Estate (90 Ha)</option>
+                  <option value="The Villas at AYANA Resort">The Villas at AYANA (Cliff)</option>
+                  <option value="AYANA Segara Bali">AYANA Segara (Ocean Wing)</option>
+                  <option value="RIMBA by AYANA Bali">RIMBA by AYANA (Forest)</option>
+                  <option value="AYANA Komodo Waecicu Beach">AYANA Komodo &amp; Yacht</option>
+                </>
+              )}
             </select>
           </div>
         </div>
@@ -74,3 +93,4 @@ export const TopPrivilegeBar: React.FC<TopPrivilegeBarProps> = ({
     </div>
   );
 };
+

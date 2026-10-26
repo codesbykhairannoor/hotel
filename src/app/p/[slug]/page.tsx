@@ -25,9 +25,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }>)[slug?.toLowerCase()];
 
   if (hotel) {
+    const title = `${hotel.name} — Luxury Hotel & Official Direct Reservations`;
+    const description = `Preview website resmi ${hotel.name} di ${hotel.city}, ${hotel.province}. Dapatkan Best Rate Guarantee, reservasi via WhatsApp, dan ulasan tamu terpercaya ⭐ ${hotel.rating}.`;
     return {
-      title: `${hotel.name} — Luxury Hotel & Official Direct Reservations`,
-      description: `Preview website resmi ${hotel.name} di ${hotel.city}, ${hotel.province}. Dapatkan Best Rate Guarantee, reservasi via WhatsApp, dan ulasan tamu terpercaya ⭐ ${hotel.rating}.`,
+      title,
+      description,
+      keywords: [
+        hotel.name,
+        `Hotel ${hotel.city}`,
+        `Penginapan ${hotel.city}`,
+        `Direct Booking ${hotel.name}`,
+        'Official Direct Reservation',
+      ],
+      openGraph: {
+        title,
+        description,
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+      },
     };
   }
 
