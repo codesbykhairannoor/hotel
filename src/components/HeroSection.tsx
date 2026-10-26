@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { BookingBar } from './BookingBar';
+import { useHotel } from '@/context/HotelContext';
 
 interface HeroSectionProps {
   onCheckAvailability: (params: {
@@ -25,6 +26,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onCheckAvailability,
   selectedProperty,
 }) => {
+  const { hotel } = useHotel();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }, []);
 
   return (
-    <section id="hero" className="relative min-h-[95vh] flex flex-col justify-between pt-16 pb-12 overflow-hidden">
+    <section id="hero" className="relative min-h-[92vh] sm:min-h-[95vh] flex flex-col justify-between pt-12 sm:pt-16 pb-10 sm:pb-12 overflow-hidden">
       {/* Background Image Carousel with Overlay */}
       <div className="absolute inset-0 z-0">
         {HERO_IMAGES.map((img, idx) => (
@@ -45,27 +47,40 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               idx === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
             } transition-transform duration-[8000ms] ease-out`}
             style={{
-              backgroundImage: `linear-gradient(180deg, rgba(11,14,20,0.4) 0%, rgba(11,14,20,0.75) 100%), url('${img}')`,
+              backgroundImage: `linear-gradient(180deg, rgba(11,14,20,0.45) 0%, rgba(11,14,20,0.8) 100%), url('${img}')`,
             }}
           />
         ))}
       </div>
 
       {/* Hero Narrative Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mt-12 sm:mt-20">
-        <div className="inline-flex items-center gap-3 text-xs font-bold tracking-[0.35em] text-[#E5C778] mb-6">
-          <span className="w-8 h-[1px] bg-[#E5C778]"></span>
-          <span>JIMBARAN BAY • BALI • INDONESIA</span>
-          <span className="w-8 h-[1px] bg-[#E5C778]"></span>
+      <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mt-8 sm:mt-16">
+        <div className="inline-flex items-center gap-2.5 sm:gap-3 text-[11px] sm:text-xs font-bold tracking-[0.3em] text-[#E5C778] mb-4 sm:mb-6 uppercase">
+          <span className="w-6 sm:w-8 h-[1px] bg-[#E5C778]"></span>
+          <span>{hotel.city} • INDONESIA</span>
+          <span className="w-6 sm:w-8 h-[1px] bg-[#E5C778]"></span>
         </div>
 
-        <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-normal text-white leading-[1.08] mb-6 text-shadow-lg">
-          Where Sacred Ocean Cliffs <br />
-          <em className="italic font-light text-[#F3E5AB]">Meet Timeless Serenity</em>
+        <h1 className="font-serif text-3xl sm:text-6xl md:text-7xl font-normal text-white leading-[1.1] mb-4 sm:mb-6 text-shadow-lg">
+          {hotel.isPersonalized ? (
+            <>
+              Welcome to <br />
+              <em className="italic font-light text-[#F3E5AB]">{hotel.name}</em>
+            </>
+          ) : (
+            <>
+              Where Sacred Ocean Cliffs <br />
+              <em className="italic font-light text-[#F3E5AB]">Meet Timeless Serenity</em>
+            </>
+          )}
         </h1>
 
-        <p className="max-w-2xl mx-auto text-slate-200 text-sm sm:text-base md:text-lg leading-relaxed mb-10 text-shadow">
-          Perched 35 meters above the azure waters of the Indian Ocean, AYANA Estate is a 90-hectare clifftop sanctuary where world-renowned Balinese grace harmonizes with untouched nature, 26 dining landmarks, and private cliffside plunge pool villas.
+        <p className="max-w-2xl mx-auto text-slate-200 text-xs sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-10 text-shadow">
+          {hotel.isPersonalized ? (
+            `Experience unparalleled comfort and prestige at ${hotel.name}. Nestled in ${hotel.city}, our sanctuary blends world-class hospitality, tailored guest suites, and exceptional dining experiences.`
+          ) : (
+            'Perched 35 meters above the azure waters of the Indian Ocean, AYANA Estate is a 90-hectare clifftop sanctuary where world-renowned Balinese grace harmonizes with untouched nature, 26 dining landmarks, and private cliffside plunge pool villas.'
+          )}
         </p>
 
         {/* Estate Metric Highlights */}

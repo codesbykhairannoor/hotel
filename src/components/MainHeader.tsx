@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { Menu, X, MessageCircle, Sparkles } from 'lucide-react';
+import { useHotel } from '@/context/HotelContext';
 
 interface MainHeaderProps {
   onOpenReserve: () => void;
 }
 
 export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
+  const { hotel } = useHotel();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -18,6 +20,10 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const hotelWaUrl = `https://wa.me/${hotel.clean_phone}?text=${encodeURIComponent(
+    `Hello ${hotel.name} Reservations, I would like to inquire about villa availability and direct booking privileges.`
+  )}`;
 
   return (
     <>
@@ -39,7 +45,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
           </button>
 
           {/* Brand Logo */}
-          <a href="#hero" className="flex items-center gap-2.5 sm:gap-3 group">
+          <a href="#hero" className="flex items-center gap-2.5 sm:gap-3 group max-w-[280px] sm:max-w-md">
             <div className="w-7 h-7 sm:w-9 sm:h-9 text-[#A37A24] transition-transform duration-500 group-hover:scale-105 flex-shrink-0">
               <svg viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
                 <path d="M50 0L65 30H35L50 0Z" fill="url(#goldGradLight)" />
@@ -54,12 +60,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
                 </defs>
               </svg>
             </div>
-            <div className="flex flex-col">
-              <span className="font-serif text-2xl sm:text-3xl font-bold tracking-[0.2em] text-stone-900 leading-none">
-                AYANA
+            <div className="flex flex-col min-w-0">
+              <span className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold tracking-[0.14em] text-stone-900 leading-tight truncate">
+                {hotel.name}
               </span>
-              <span className="text-[9px] sm:text-[10px] tracking-[0.35em] text-[#855F16] font-bold mt-0.5">
-                ESTATE • BALI
+              <span className="text-[9px] sm:text-[10px] tracking-[0.28em] text-[#855F16] font-bold mt-0.5 truncate uppercase">
+                {hotel.city} • INDONESIA
               </span>
             </div>
           </a>
@@ -93,9 +99,9 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
           </nav>
 
           {/* Header Action Buttons */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <a
-              href="https://wa.me/62811388555?text=Hello%20AYANA%20Estate%20VIP%20Concierge,%20I%20would%20like%20to%20inquire%20about%20villa%20availability%20and%20direct%20booking%20privileges."
+              href={hotelWaUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center gap-1.5 bg-[#25D366]/15 hover:bg-[#25D366] text-[#136C35] hover:text-white border border-[#25D366]/40 px-3 py-1.5 rounded-full text-xs font-bold tracking-wide transition-all duration-300 shadow-2xs"
@@ -131,17 +137,17 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
         >
           <div>
             <div className="flex items-center justify-between pb-4 border-b border-[#E8E3D8]">
-              <div className="flex flex-col">
-                <span className="font-serif text-2xl font-bold tracking-widest text-stone-900">
-                  AYANA ESTATE
+              <div className="flex flex-col min-w-0 pr-2">
+                <span className="font-serif text-xl sm:text-2xl font-bold tracking-wider text-stone-900 truncate">
+                  {hotel.name}
                 </span>
-                <span className="text-[10px] tracking-[0.25em] text-[#855F16] font-bold">
-                  BALI • INDONESIA
+                <span className="text-[10px] tracking-[0.25em] text-[#855F16] font-bold uppercase truncate">
+                  {hotel.city} • INDONESIA
                 </span>
               </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-stone-500 hover:text-stone-900 p-2 rounded-lg active:bg-stone-200/60"
+                className="text-stone-500 hover:text-stone-900 p-2 rounded-lg active:bg-stone-200/60 flex-shrink-0"
                 aria-label="Close Navigation Menu"
               >
                 <X className="w-6 h-6" />
@@ -206,7 +212,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
               RESERVE YOUR STAY
             </button>
             <a
-              href="https://wa.me/62811388555?text=Hello%20AYANA%20Estate%20VIP%20Concierge,%20I%20would%20like%20to%20inquire%20about%20villa%20availability."
+              href={hotelWaUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 bg-[#25D366]/20 text-[#136C35] border border-[#25D366] font-bold text-sm py-3 rounded-lg text-center"

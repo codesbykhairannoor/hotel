@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, CheckCircle, MessageCircle, ShieldCheck, Download, Sparkles } from 'lucide-react';
 import { ROOMS_DATA, formatCurrency } from '@/data/hotelData';
+import { useHotel } from '@/context/HotelContext';
 
 interface ReservationModalProps {
   isOpen: boolean;
@@ -25,8 +26,10 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
   currentCurrency,
   initialParams,
 }) => {
+  const { hotel } = useHotel();
+
   const [property, setProperty] = useState(
-    initialParams?.property || 'The Villas at AYANA Resort'
+    initialParams?.property || (hotel.isPersonalized ? hotel.name : 'The Villas at AYANA Resort')
   );
   const [checkIn, setCheckIn] = useState(initialParams?.checkIn || '2026-11-05');
   const [checkOut, setCheckOut] = useState(initialParams?.checkOut || '2026-11-08');
@@ -52,11 +55,15 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
   const [guestPhone, setGuestPhone] = useState('+61 412 345 678');
 
   useEffect(() => {
-    if (initialParams?.property) setProperty(initialParams.property);
+    if (initialParams?.property) {
+      setProperty(initialParams.property);
+    } else if (hotel.isPersonalized) {
+      setProperty(hotel.name);
+    }
     if (initialParams?.checkIn) setCheckIn(initialParams.checkIn);
     if (initialParams?.checkOut) setCheckOut(initialParams.checkOut);
     if (initialParams?.roomName) setSelectedRoomName(initialParams.roomName);
-  }, [initialParams]);
+  }, [initialParams, hotel]);
 
   if (!isOpen) return null;
 
@@ -88,7 +95,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
   // Execute Direct Booking simulation
   const handleConfirmDirect = (e: React.FormEvent) => {
     e.preventDefault();
-    const code = `AYN-BALI-${Math.floor(100000 + Math.random() * 900000)}`;
+    const code = `HTL-${hotel.slug?.slice(0, 4).toUpperCase() || 'RES'}-${Math.floor(100000 + Math.random() * 900000)}`;
     setConfirmedVoucher({
       code,
       guestName,
@@ -98,21 +105,23 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
 
   // Execute WhatsApp VIP Concierge
   const handleWhatsAppBooking = () => {
-    const text = `*AYANA ESTATE VIP RESERVATION INQUIRY*
+    const text = `*RESERVASI VIP — ${hotel.name.toUpperCase()}*
 ━━━━━━━━━━━━━━━━━━━━
-• *Property*: ${property}
-• *Sanctuary*: ${selectedRoom.name}
-• *Dates*: ${checkIn} to ${checkOut} (${nights} Nights)
-• *Guests*: ${initialParams?.adults || 2} Adults, ${initialParams?.children || 0} Children
-• *Add-ons*: ${addonTransfer ? 'Limousine Transfer, ' : ''}${addonRockBar ? 'Rock Bar VIP Sunset, ' : ''}${addonSpa ? 'Couple Seawater Spa, ' : ''}${!addonTransfer && !addonRockBar && !addonSpa ? 'None' : ''}
-• *Estimated Total*: ${formatCurrency(grandTotalUSD, currentCurrency)} (Incl. 10% Direct Privilege & Tax)
-• *Guest*: ${guestName} (${guestPhone})
+• *Properti*: ${property} (${hotel.city})
+• *Tipe Kamar*: ${selectedRoom.name}
+• *Periode Menginap*: ${checkIn} s/d ${checkOut} (${nights} Malam)
+• *Jumlah Tamu*: ${initialParams?.adults || 2} Dewasa, ${initialParams?.children || 0} Anak
+• *Tambahan Layanan*: ${addonTransfer ? 'Antar Jemput VIP, ' : ''}${addonRockBar ? 'Lounge Sunset Table, ' : ''}${addonSpa ? 'Hydrotherapy Spa, ' : ''}${!addonTransfer && !addonRockBar && !addonSpa ? 'Standard Package' : ''}
+• *Estimasi Total*: ${formatCurrency(grandTotalUSD, currentCurrency)} (Termasuk Diskon Langsung 10% & Pajak)
+• *Nama Tamu*: ${guestName} (${guestPhone})
 ━━━━━━━━━━━━━━━━━━━━
-Please confirm villa availability and secure my reservation hold.`;
+Halo Admin ${hotel.name}, mohon konfirmasi ketersediaan kamar untuk tanggal tersebut dan kirimkan panduan reservasi resminya. Terima kasih!`;
 
     const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/62811388555?text=${encoded}`, '_blank');
+    const waNumber = hotel.clean_phone || '62811388555';
+    window.open(`https://wa.me/${waNumber}?text=${encoded}`, '_blank');
   };
+
 
   return (
     <div className="fixed inset-0 z-50 bg-stone-900/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">

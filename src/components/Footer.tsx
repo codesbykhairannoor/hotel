@@ -2,8 +2,10 @@
 
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Award, CheckCircle } from 'lucide-react';
+import { useHotel } from '@/context/HotelContext';
 
 export const Footer: React.FC = () => {
+  const { hotel } = useHotel();
   const [subscribed, setSubscribed] = useState(false);
   const [email, setEmail] = useState('');
 
@@ -21,24 +23,26 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 mb-12 sm:mb-16">
           {/* Brand Col */}
           <div className="lg:col-span-4">
-            <span className="font-serif text-3xl font-bold tracking-[0.2em] text-[#E5C778] block mb-3">
-              AYANA ESTATE
+            <span className="font-serif text-3xl font-bold tracking-[0.2em] text-[#E5C778] block mb-3 uppercase">
+              {hotel.name}
             </span>
             <p className="text-stone-400 text-xs sm:text-sm leading-relaxed mb-6">
-              The pinnacle of luxury oceanfront sanctuaries in Indonesia. Spanning 90 hectares along Jimbaran’s limestone sunset cliffs, integrating 5 distinct properties, 26 dining landmarks, and private Kubu beach.
+              {hotel.isPersonalized
+                ? `Pusat keramahan dan akomodasi unggulan di ${hotel.city}, ${hotel.province}. Menghadirkan kenyamanan istimewa, pelayanan prima bintang lima, dan kemudahan reservasi langsung.`
+                : 'The pinnacle of luxury oceanfront sanctuaries in Indonesia. Spanning 90 hectares along Jimbaran’s limestone sunset cliffs, integrating 5 distinct properties, 26 dining landmarks, and private Kubu beach.'}
             </p>
             <div className="space-y-2 text-xs text-stone-300 mb-6">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#E5C778] flex-shrink-0" />
-                <span>Jalan Karang Mas Sejahtera, Jimbaran, Bali 80364, Indonesia</span>
+                <span>{hotel.address}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#E5C778] flex-shrink-0" />
-                <span>+62 361 702222 / VIP Desk: +62 811-388-555</span>
+                <span>{hotel.phone} • Official WhatsApp Concierge</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#E5C778] flex-shrink-0" />
-                <span>reservation@ayana.com</span>
+                <span>concierge@{hotel.slug || 'ayana'}.id</span>
               </div>
             </div>
           </div>
@@ -49,27 +53,25 @@ export const Footer: React.FC = () => {
               The Collection
             </h4>
             <ul className="space-y-2 text-xs text-stone-400">
-              <li><a href="#properties" className="hover:text-[#E5C778] transition-colors">The Villas at AYANA</a></li>
-              <li><a href="#properties" className="hover:text-[#E5C778] transition-colors">AYANA Segara Bali</a></li>
-              <li><a href="#properties" className="hover:text-[#E5C778] transition-colors">AYANA Resort Bali</a></li>
-              <li><a href="#properties" className="hover:text-[#E5C778] transition-colors">RIMBA by AYANA</a></li>
-              <li><a href="#properties" className="hover:text-[#E5C778] transition-colors">AYANA Komodo Resort</a></li>
-              <li><a href="#properties" className="hover:text-[#E5C778] transition-colors">AYANA Midplaza Jakarta</a></li>
+              <li><a href="#properties" className="hover:text-[#E5C778] transition-colors">Villas &amp; Suites</a></li>
+              <li><a href="#properties" className="hover:text-[#E5C778] transition-colors">Deluxe Executive</a></li>
+              <li><a href="#properties" className="hover:text-[#E5C778] transition-colors">Family Penthouse</a></li>
+              <li><a href="#properties" className="hover:text-[#E5C778] transition-colors">Presidential Sanctuary</a></li>
+              <li><a href="#properties" className="hover:text-[#E5C778] transition-colors">Special Weekend Package</a></li>
             </ul>
           </div>
 
           {/* Signature Destinations */}
           <div className="lg:col-span-3">
             <h4 className="text-xs font-bold uppercase tracking-widest text-white mb-4">
-              Landmarks & Dining
+              Facilities &amp; Dining
             </h4>
             <ul className="space-y-2 text-xs text-stone-400">
-              <li><a href="#dining" className="hover:text-[#E5C778] transition-colors">Rock Bar, BALI (CNN Top 10)</a></li>
-              <li><a href="#wellness" className="hover:text-[#E5C778] transition-colors">Aquatonic Seawater Pool</a></li>
-              <li><a href="#dining" className="hover:text-[#E5C778] transition-colors">Kisik Beach Seafood Lounge</a></li>
-              <li><a href="#experiences" className="hover:text-[#E5C778] transition-colors">Private Kubu Beach & Inclinator</a></li>
-              <li><a href="#experiences" className="hover:text-[#E5C778] transition-colors">AYANA Lako di'a 54m Phinisi</a></li>
-              <li><a href="#experiences" className="hover:text-[#E5C778] transition-colors">Tresna Glass Wedding Chapel</a></li>
+              <li><a href="#dining" className="hover:text-[#E5C778] transition-colors">Signature Sky Lounge &amp; Bar</a></li>
+              <li><a href="#wellness" className="hover:text-[#E5C778] transition-colors">Wellness Hydrotherapy &amp; Spa</a></li>
+              <li><a href="#dining" className="hover:text-[#E5C778] transition-colors">Gourmet Breakfast Buffet</a></li>
+              <li><a href="#experiences" className="hover:text-[#E5C778] transition-colors">Grand Ballroom &amp; Meetings</a></li>
+              <li><a href="#experiences" className="hover:text-[#E5C778] transition-colors">VIP Airport Limousine Transfer</a></li>
             </ul>
           </div>
 
@@ -118,16 +120,17 @@ export const Footer: React.FC = () => {
         {/* Bottom Line */}
         <div className="pt-6 sm:pt-8 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-stone-500">
           <div>
-            &copy; 2026 AYANA Estate. All Rights Reserved. Luxury Sanctuary Experience.
+            &copy; 2026 {hotel.name} ({hotel.city}). All Rights Reserved. Luxury Hospitality Experience.
           </div>
           <div className="flex gap-4 sm:gap-6">
             <a href="#hero" className="hover:text-[#E5C778] transition-colors">Privacy Policy</a>
             <a href="#hero" className="hover:text-[#E5C778] transition-colors">Best Rate Guarantee</a>
             <a href="#hero" className="hover:text-[#E5C778] transition-colors">Terms of Stay</a>
-            <a href="#hero" className="hover:text-[#E5C778] transition-colors">Resort Map</a>
+            <a href="#hero" className="hover:text-[#E5C778] transition-colors">Direct WhatsApp</a>
           </div>
         </div>
       </div>
     </footer>
   );
 };
+

@@ -1,27 +1,32 @@
+'use client';
+
 import React from 'react';
-import { Trophy, Star, Award, Sparkles } from 'lucide-react';
+import { Trophy, Star, Award, Sparkles, MapPin, CheckCircle } from 'lucide-react';
+import { useHotel } from '@/context/HotelContext';
 
 export const SocialProofAwards: React.FC = () => {
+  const { hotel } = useHotel();
+
   const awards = [
     {
       icon: Trophy,
-      source: 'Travel + Leisure',
-      title: '#1 Resort in Indonesia 2025',
+      source: hotel.isPersonalized ? 'Google Maps Rating' : 'Travel + Leisure',
+      title: hotel.isPersonalized ? `⭐ ${hotel.rating} / 5.0 Star Experience` : '#1 Resort in Indonesia 2025',
     },
     {
       icon: Star,
-      source: 'Forbes Travel Guide',
-      title: 'Five-Star Luxury Award',
+      source: hotel.isPersonalized ? 'Verified Guest Reviews' : 'Forbes Travel Guide',
+      title: hotel.isPersonalized ? `${hotel.reviews}+ Verified Travelers` : 'Five-Star Luxury Award',
     },
     {
       icon: Award,
-      source: 'Condé Nast Traveler',
-      title: 'Gold List: Top Resorts in Asia',
+      source: hotel.isPersonalized ? 'Prime Location' : 'Condé Nast Traveler',
+      title: hotel.isPersonalized ? `Premier Stay in ${hotel.city}` : 'Gold List: Top Resorts in Asia',
     },
     {
       icon: Sparkles,
-      source: 'World Luxury Spa Awards',
-      title: 'Best Resort Spa Globally',
+      source: hotel.isPersonalized ? 'Direct Booking Privilege' : 'World Luxury Spa Awards',
+      title: hotel.isPersonalized ? 'Best Rate Guarantee & VIP Care' : 'Best Resort Spa Globally',
     },
   ];
 
@@ -31,11 +36,24 @@ export const SocialProofAwards: React.FC = () => {
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
           <span className="text-xs font-bold tracking-[0.3em] text-[#855F16] uppercase block mb-3">
-            CELEBRATED EXCELLENCE
+            {hotel.isPersonalized ? 'VERIFIED GUEST ACCLAIM' : 'CELEBRATED EXCELLENCE'}
           </span>
           <h2 className="font-serif text-3xl sm:text-5xl text-stone-900 font-normal">
-            Recognized Among the World’s Finest
+            {hotel.isPersonalized
+              ? `Trusted Excellence at ${hotel.name}`
+              : 'Recognized Among the World’s Finest'}
           </h2>
+          {hotel.isPersonalized && (
+            <div className="mt-3 inline-flex items-center gap-2 bg-[#A37A24]/10 text-[#855F16] font-semibold text-xs sm:text-sm px-4 py-1.5 rounded-full border border-[#A37A24]/20">
+              <MapPin className="w-4 h-4 text-[#855F16]" />
+              <span>{hotel.city}, {hotel.province}</span>
+              <span>•</span>
+              <span className="flex items-center gap-1">
+                <Star className="w-3.5 h-3.5 fill-[#855F16]" />
+                <strong>{hotel.rating}</strong> ({hotel.reviews} ulasan)
+              </span>
+            </div>
+          )}
         </div>
 
         {/* 4 Awards Grid */}
@@ -66,15 +84,19 @@ export const SocialProofAwards: React.FC = () => {
           </div>
 
           <p className="font-serif text-base sm:text-2xl text-stone-800 italic leading-relaxed mb-6 font-light">
-            “We have stayed at luxury properties worldwide, but The Villas at AYANA is on an entirely different level of perfection. The private clifftop plunge pool at sunset, our personal butler Gede who anticipated our every need, and the VIP access to Rock Bar made this the most memorable stay of our lives.”
+            {hotel.isPersonalized
+              ? `“Pelayanan di ${hotel.name} sungguh luar biasa ramah dan profesional. Lokasinya di ${hotel.city} sangat strategis, suasana kamar bersih dan nyaman, serta reservasi via WhatsApp sangat responsif dan cepat.”`
+              : '“We have stayed at luxury properties worldwide, but The Villas at AYANA is on an entirely different level of perfection. The private clifftop plunge pool at sunset, our personal butler Gede who anticipated our every need, and the VIP access to Rock Bar made this the most memorable stay of our lives.”'}
           </p>
 
           <div>
             <strong className="text-xs sm:text-sm font-bold text-stone-900 block">
-              Sir Alistair & Lady Evelyn Vance
+              {hotel.isPersonalized ? 'Tamu Terverifikasi' : 'Sir Alistair & Lady Evelyn Vance'}
             </strong>
             <span className="text-[11px] sm:text-xs text-stone-500">
-              London, United Kingdom • Stayed 7 Nights at Ocean Clifftop Villa
+              {hotel.isPersonalized
+                ? `Ulasan Bintang ${hotel.rating} di Google Maps • Menginap di ${hotel.city}`
+                : 'London, United Kingdom • Stayed 7 Nights at Ocean Clifftop Villa'}
             </span>
           </div>
         </div>
@@ -82,3 +104,4 @@ export const SocialProofAwards: React.FC = () => {
     </section>
   );
 };
+
