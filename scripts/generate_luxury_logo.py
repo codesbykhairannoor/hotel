@@ -1,0 +1,267 @@
+"""
+Generate World-Class Luxury Hotel Crest Logo
+SVG + High-Resolution Transparent PNGs for Navbar and Browser Favicon
+"""
+import os
+import subprocess
+from PIL import Image
+
+OUT_DIR = r"d:\hotel\public"
+APP_DIR = r"d:\hotel\src\app"
+os.makedirs(OUT_DIR, exist_ok=True)
+os.makedirs(APP_DIR, exist_ok=True)
+
+# 1. Handcrafted Masterpiece SVG: "The Imperial Sanctuary Pavilion & Crown Crest"
+# Perfectly symmetrical at x=256, 512x512 viewBox
+svg_code = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <!-- Rich Multi-Stop Royal Gold Gradient -->
+    <linearGradient id="crestGold" x1="64" y1="48" x2="448" y2="464" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FDF6D8" />
+      <stop offset="25%" stop-color="#EAC368" />
+      <stop offset="50%" stop-color="#D4A437" />
+      <stop offset="75%" stop-color="#BA8520" />
+      <stop offset="100%" stop-color="#7A5210" />
+    </linearGradient>
+
+    <!-- Champagne Radiant Highlight -->
+    <linearGradient id="crestHighlight" x1="256" y1="40" x2="256" y2="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFDF0" />
+      <stop offset="50%" stop-color="#E8BE5D" />
+      <stop offset="100%" stop-color="#9E6E16" />
+    </linearGradient>
+
+    <!-- Deep Shadow Accent -->
+    <linearGradient id="crestDarkGold" x1="256" y1="200" x2="256" y2="460" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#DCAE46" />
+      <stop offset="50%" stop-color="#B27D18" />
+      <stop offset="100%" stop-color="#5E3E07" />
+    </linearGradient>
+
+    <!-- Subtle Drop Glow Filter for Richness -->
+    <filter id="royalGlow" x="-10%" y="-10%" width="120%" height="120%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#805908" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Group with subtle royal glow -->
+  <g filter="url(#royalGlow)">
+    <!-- 1. Outer Geometric Celestial Border: Double Octagonal Ring with Accents -->
+    <!-- Outer Octagon Contour -->
+    <path d="M 160 48 L 352 48 L 464 160 L 464 352 L 352 464 L 160 464 L 48 352 L 48 160 Z"
+          stroke="url(#crestGold)" stroke-width="4.5" stroke-linejoin="round" fill="none" opacity="0.9" />
+
+    <!-- Inner Concentric Circular Border -->
+    <circle cx="256" cy="256" r="188" stroke="url(#crestGold)" stroke-width="2.5" stroke-dasharray="7 5" fill="none" opacity="0.75" />
+    <circle cx="256" cy="256" r="176" stroke="url(#crestGold)" stroke-width="2" fill="none" opacity="0.85" />
+
+    <!-- Cardinal Corner Star-Points / Diamonds -->
+    <!-- North -->
+    <polygon points="256,34 263,48 256,62 249,48" fill="url(#crestHighlight)" />
+    <!-- South -->
+    <polygon points="256,450 263,464 256,478 249,464" fill="url(#crestHighlight)" />
+    <!-- West -->
+    <polygon points="34,256 48,263 62,256 48,249" fill="url(#crestHighlight)" />
+    <!-- East -->
+    <polygon points="450,256 464,263 478,256 464,249" fill="url(#crestHighlight)" />
+
+    <!-- 4 Diagonal Micro-Stars (NE, NW, SE, SW) -->
+    <circle cx="104" cy="104" r="3.5" fill="url(#crestHighlight)" />
+    <circle cx="408" cy="104" r="3.5" fill="url(#crestHighlight)" />
+    <circle cx="104" cy="408" r="3.5" fill="url(#crestHighlight)" />
+    <circle cx="408" cy="408" r="3.5" fill="url(#crestHighlight)" />
+
+    <!-- 2. Sacred Sanctuary Portal (Classical Grand Archway) -->
+    <!-- Archway Keystone / Apex Ornament -->
+    <path d="M 256 94 L 264 108 L 256 122 L 248 108 Z" fill="url(#crestHighlight)" />
+
+    <!-- Outer Arch Frame -->
+    <path d="M 148 376 L 148 244 C 148 184.3 196.3 136 256 136 C 315.7 136 364 184.3 364 244 L 364 376"
+          stroke="url(#crestGold)" stroke-width="4.5" stroke-linecap="round" fill="none" />
+
+    <!-- Inner Arch Frame -->
+    <path d="M 164 376 L 164 248 C 164 197.2 205.2 156 256 156 C 306.8 156 348 197.2 348 248 L 348 376"
+          stroke="url(#crestGold)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.7" />
+
+    <!-- 3. Celestial Star of Excellence (8-Pointed Star at Arch Summit) -->
+    <g transform="translate(256, 196)">
+      <!-- Vertical & Horizontal Primary Rays -->
+      <polygon points="0,-24 4,-6 24,0 4,6 0,24 -4,6 -24,0 -4,-6" fill="url(#crestHighlight)" />
+      <!-- Diagonal Secondary Rays -->
+      <polygon points="0,-15 3,-4 15,0 3,4 0,15 -3,4 -15,0 -3,-4" transform="rotate(45)" fill="url(#crestGold)" opacity="0.9" />
+      <!-- Core Brilliant Diamond -->
+      <circle cx="0" cy="0" r="2.5" fill="#FFFDF0" />
+    </g>
+
+    <!-- 4. The Royal Five-Star Crown & Blooming Lotus Emblem -->
+    <!-- Crown / Lotus Center Majestic Petal (Vertical Ascent) -->
+    <path d="M 256 226 C 263 246 268 274 256 312 C 244 274 249 246 256 226 Z"
+          fill="url(#crestHighlight)" stroke="url(#crestDarkGold)" stroke-width="1.5" />
+
+    <!-- Left Inner Petal / Crown Tier -->
+    <path d="M 256 312 C 242 276 222 254 198 250 C 212 278 226 298 256 312 Z"
+          fill="url(#crestGold)" stroke="url(#crestDarkGold)" stroke-width="1.5" />
+
+    <!-- Right Inner Petal / Crown Tier -->
+    <path d="M 256 312 C 270 276 290 254 314 250 C 300 278 286 298 256 312 Z"
+          fill="url(#crestGold)" stroke="url(#crestDarkGold)" stroke-width="1.5" />
+
+    <!-- Left Outer Royal Wing -->
+    <path d="M 256 312 C 230 292 200 286 174 290 C 196 314 224 318 256 312 Z"
+          fill="url(#crestDarkGold)" stroke="url(#crestGold)" stroke-width="1.2" />
+
+    <!-- Right Outer Royal Wing -->
+    <path d="M 256 312 C 282 292 312 286 338 290 C 316 314 288 318 256 312 Z"
+          fill="url(#crestDarkGold)" stroke="url(#crestGold)" stroke-width="1.2" />
+
+    <!-- 5 Crown Jewels / Golden Spheres Atop Petal Tips -->
+    <circle cx="256" cy="223" r="5" fill="url(#crestHighlight)" stroke="#7A5210" stroke-width="1" />
+    <circle cx="198" cy="248" r="4.2" fill="url(#crestHighlight)" stroke="#7A5210" stroke-width="1" />
+    <circle cx="314" cy="248" r="4.2" fill="url(#crestHighlight)" stroke="#7A5210" stroke-width="1" />
+    <circle cx="173" cy="289" r="3.8" fill="url(#crestHighlight)" stroke="#7A5210" stroke-width="1" />
+    <circle cx="339" cy="289" r="3.8" fill="url(#crestHighlight)" stroke="#7A5210" stroke-width="1" />
+
+    <!-- Crown Diadem / Gemmed Waistband -->
+    <path d="M 206 318 Q 256 328 306 318 Q 256 334 206 318 Z" fill="url(#crestHighlight)" />
+    <circle cx="232" cy="323" r="2.2" fill="#5E3E07" />
+    <circle cx="256" cy="326" r="2.8" fill="#5E3E07" />
+    <circle cx="280" cy="323" r="2.2" fill="#5E3E07" />
+
+    <!-- 5. Classical Architectural Colonnade & Foundation Pediment -->
+    <!-- Twin Slender Colonnade Shafts (Left & Right) -->
+    <!-- Left Column Fluting -->
+    <line x1="184" y1="334" x2="184" y2="376" stroke="url(#crestGold)" stroke-width="3" stroke-linecap="round" />
+    <line x1="192" y1="334" x2="192" y2="376" stroke="url(#crestGold)" stroke-width="1.5" stroke-linecap="round" opacity="0.7" />
+    <!-- Right Column Fluting -->
+    <line x1="328" y1="334" x2="328" y2="376" stroke="url(#crestGold)" stroke-width="3" stroke-linecap="round" />
+    <line x1="320" y1="334" x2="320" y2="376" stroke="url(#crestGold)" stroke-width="1.5" stroke-linecap="round" opacity="0.7" />
+
+    <!-- Center Sanctuary Balustrade Motif -->
+    <path d="M 224 346 Q 256 352 288 346" stroke="url(#crestGold)" stroke-width="2" fill="none" opacity="0.8" />
+    <line x1="256" y1="336" x2="256" y2="376" stroke="url(#crestHighlight)" stroke-width="2.5" stroke-linecap="round" />
+    <circle cx="256" cy="342" r="3" fill="url(#crestHighlight)" />
+
+    <!-- Grand Stepped Base / Foundation Plinth -->
+    <!-- Upper Plinth Cornice -->
+    <rect x="136" y="376" width="240" height="7" rx="3.5" fill="url(#crestGold)" />
+    <!-- Middle Sub-Base -->
+    <rect x="124" y="386" width="264" height="6" rx="3" fill="url(#crestDarkGold)" />
+    <!-- Bottom Ground Pediment -->
+    <rect x="108" y="395" width="296" height="7" rx="3.5" fill="url(#crestGold)" />
+
+    <!-- Baseline Inscription Mark / Roman Numerals or Est. Star Line -->
+    <line x1="172" y1="416" x2="236" y2="416" stroke="url(#crestGold)" stroke-width="1.8" stroke-linecap="round" opacity="0.6" />
+    <polygon points="256,412 260,416 256,420 252,416" fill="url(#crestHighlight)" />
+    <line x1="276" y1="416" x2="340" y2="416" stroke="url(#crestGold)" stroke-width="1.8" stroke-linecap="round" opacity="0.6" />
+  </g>
+</svg>'''
+
+# Save master SVG files
+svg_public_path = os.path.join(OUT_DIR, "logo.svg")
+with open(svg_public_path, "w", encoding="utf-8") as f:
+    f.write(svg_code)
+
+svg_app_path = os.path.join(APP_DIR, "icon.svg")
+with open(svg_app_path, "w", encoding="utf-8") as f:
+    f.write(svg_code)
+
+print(f"Master SVG saved to: {svg_public_path} and {svg_app_path}")
+
+# 2. Render to PNG using Microsoft Edge Headless (100% vector accuracy & crisp anti-aliasing)
+edge_exe = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+html_renderer = os.path.join(OUT_DIR, "_render_logo.html")
+rendered_raw_png = os.path.join(OUT_DIR, "_raw_logo_512.png")
+
+html_content = f'''<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+    html, body {{
+      width: 512px;
+      height: 512px;
+      background: transparent;
+      overflow: hidden;
+    }}
+    svg {{
+      width: 512px;
+      height: 512px;
+      display: block;
+    }}
+  </style>
+</head>
+<body>
+{svg_code}
+</body>
+</html>'''
+
+with open(html_renderer, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+# Launch Edge headless screenshot
+cmd = [
+    edge_exe,
+    "--headless",
+    "--disable-gpu",
+    "--hide-scrollbars",
+    "--default-background-color=00000000",
+    "--window-size=512,512",
+    f"--screenshot={rendered_raw_png}",
+    f"file:///{html_renderer.replace(os.sep, '/')}"
+]
+
+print("Rendering 512x512 transparent PNG via Edge headless...")
+res = subprocess.run(cmd, capture_output=True, text=True)
+print("Edge return code:", res.returncode)
+
+if os.path.exists(rendered_raw_png):
+    img = Image.open(rendered_raw_png).convert("RGBA")
+    print(f"Rendered image size: {img.size}, mode: {img.mode}")
+
+    # Generate multi-size assets:
+    # A. Master 512x512 Logo PNG
+    logo_512 = os.path.join(OUT_DIR, "logo.png")
+    img.save(logo_512, "PNG", optimize=True)
+
+    # B. App Router icon.png (512x512 & 192x192)
+    icon_app = os.path.join(APP_DIR, "icon.png")
+    img.save(icon_app, "PNG", optimize=True)
+
+    apple_icon_app = os.path.join(APP_DIR, "apple-icon.png")
+    img_apple = img.resize((180, 180), Image.Resampling.LANCZOS)
+    img_apple.save(apple_icon_app, "PNG", optimize=True)
+
+    # C. Public favicons (32x32, 48x48, 64x64)
+    fav_32 = img.resize((32, 32), Image.Resampling.LANCZOS)
+    fav_32.save(os.path.join(OUT_DIR, "favicon-32x32.png"), "PNG")
+
+    fav_16 = img.resize((16, 16), Image.Resampling.LANCZOS)
+    fav_16.save(os.path.join(OUT_DIR, "favicon-16x16.png"), "PNG")
+
+    fav_png = img.resize((48, 48), Image.Resampling.LANCZOS)
+    fav_png.save(os.path.join(OUT_DIR, "favicon.png"), "PNG")
+
+    # D. Multi-resolution favicon.ico (16, 32, 48, 64)
+    ico_path = os.path.join(OUT_DIR, "favicon.ico")
+    img.save(
+        ico_path,
+        format="ICO",
+        sizes=[(16, 16), (32, 32), (48, 48), (64, 64)]
+    )
+
+    ico_app_path = os.path.join(APP_DIR, "favicon.ico")
+    img.save(
+        ico_app_path,
+        format="ICO",
+        sizes=[(16, 16), (32, 32), (48, 48), (64, 64)]
+    )
+
+    print("Successfully generated all logo PNG and ICO assets!")
+
+    # Cleanup temporary render files
+    if os.path.exists(html_renderer):
+        os.remove(html_renderer)
+    if os.path.exists(rendered_raw_png):
+        os.remove(rendered_raw_png)
+else:
+    print("Warning: Edge headless did not output PNG file. Inspect error:", res.stderr)

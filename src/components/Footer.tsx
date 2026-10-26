@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { MapPin, Phone, Mail, Award, CheckCircle } from 'lucide-react';
 import { useHotel } from '@/context/HotelContext';
 
@@ -23,9 +24,20 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 mb-12 sm:mb-16">
           {/* Brand Col */}
           <div className="lg:col-span-4">
-            <span className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#E5C778] block mb-3">
-              {hotel.name}
-            </span>
+            <div className="flex items-center gap-2.5 mb-3">
+              <div className="relative w-8 h-8 flex-shrink-0">
+                <Image
+                  src="/logo.png"
+                  alt={`${hotel.name} Emblem`}
+                  width={32}
+                  height={32}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <span className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#E5C778]">
+                {hotel.name}
+              </span>
+            </div>
             <p className="text-stone-400 text-xs sm:text-sm leading-relaxed mb-6">
               {hotel.isPersonalized
                 ? `Pusat keramahan dan akomodasi unggulan di ${hotel.city}${hotel.province && hotel.province !== hotel.city ? `, ${hotel.province}` : ''}. Menghadirkan kenyamanan istimewa, pelayanan prima bintang lima, dan kemudahan reservasi langsung.`

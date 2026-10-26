@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Menu, X, MessageCircle, Sparkles, ChevronRight } from 'lucide-react';
 import { useHotel } from '@/context/HotelContext';
 
@@ -38,21 +39,17 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
           {/* Left: Brand Logo & Identity (Compact, Natural Spacing, Never Wraps) */}
           <a
             href="#hero"
-            className="flex items-center gap-2 sm:gap-2.5 group min-w-0 flex-shrink-0 max-w-[200px] sm:max-w-[280px] lg:max-w-[340px] xl:max-w-[420px]"
+            className="flex items-center gap-2.5 sm:gap-3 group min-w-0 flex-shrink-0 max-w-[200px] sm:max-w-[280px] lg:max-w-[340px] xl:max-w-[420px]"
           >
-            <div className="w-6 h-6 sm:w-7 sm:h-7 text-[#A37A24] transition-transform duration-300 group-hover:scale-105 flex-shrink-0">
-              <svg viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                <path d="M50 0L65 30H35L50 0Z" fill="url(#goldGradHdr)" />
-                <path d="M20 35L35 65H5L20 35Z" fill="url(#goldGradHdr)" opacity="0.85" />
-                <path d="M80 35L95 65H65L80 35Z" fill="url(#goldGradHdr)" opacity="0.85" />
-                <defs>
-                  <linearGradient id="goldGradHdr" x1="0" y1="0" x2="100" y2="70" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#D9A83E" />
-                    <stop offset="0.5" stopColor="#B88E38" />
-                    <stop offset="1" stopColor="#7A5914" />
-                  </linearGradient>
-                </defs>
-              </svg>
+            <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
+              <Image
+                src="/logo.png"
+                alt={`${hotel.name} Emblem`}
+                width={32}
+                height={32}
+                className="w-full h-full object-contain"
+                priority
+              />
             </div>
             <div className="flex flex-col min-w-0">
               <span className="font-serif text-base sm:text-lg lg:text-xl font-bold tracking-tight text-stone-900 leading-tight truncate">
@@ -161,13 +158,24 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
         >
           <div>
             <div className="flex items-center justify-between pb-4 border-b border-[#E8E3D8]">
-              <div className="flex flex-col min-w-0 pr-2">
-                <span className="font-serif text-lg font-bold tracking-tight text-stone-900 truncate">
-                  {hotel.name}
-                </span>
-                <span className="text-[10px] tracking-wider text-[#855F16] font-semibold uppercase truncate">
-                  {hotel.city} • INDONESIA
-                </span>
+              <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                <div className="relative w-7 h-7 flex-shrink-0">
+                  <Image
+                    src="/logo.png"
+                    alt={`${hotel.name} Emblem`}
+                    width={28}
+                    height={28}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="font-serif text-lg font-bold tracking-tight text-stone-900 truncate">
+                    {hotel.name}
+                  </span>
+                  <span className="text-[10px] tracking-wider text-[#855F16] font-semibold uppercase truncate">
+                    {hotel.city} • INDONESIA
+                  </span>
+                </div>
               </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}
