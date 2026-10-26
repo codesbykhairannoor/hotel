@@ -23,12 +23,12 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 mb-12 sm:mb-16">
           {/* Brand Col */}
           <div className="lg:col-span-4">
-            <span className="font-serif text-3xl font-bold tracking-[0.2em] text-[#E5C778] block mb-3 uppercase">
+            <span className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#E5C778] block mb-3">
               {hotel.name}
             </span>
             <p className="text-stone-400 text-xs sm:text-sm leading-relaxed mb-6">
               {hotel.isPersonalized
-                ? `Pusat keramahan dan akomodasi unggulan di ${hotel.city}, ${hotel.province}. Menghadirkan kenyamanan istimewa, pelayanan prima bintang lima, dan kemudahan reservasi langsung.`
+                ? `Pusat keramahan dan akomodasi unggulan di ${hotel.city}${hotel.province && hotel.province !== hotel.city ? `, ${hotel.province}` : ''}. Menghadirkan kenyamanan istimewa, pelayanan prima bintang lima, dan kemudahan reservasi langsung.`
                 : 'The pinnacle of luxury oceanfront sanctuaries in Indonesia. Spanning 90 hectares along Jimbaran’s limestone sunset cliffs, integrating 5 distinct properties, 26 dining landmarks, and private Kubu beach.'}
             </p>
             <div className="space-y-2 text-xs text-stone-300 mb-6">

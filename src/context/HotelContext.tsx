@@ -66,24 +66,28 @@ export const HotelProvider: React.FC<{
 
     // 2. Query overrides (e.g. ?hotel=...&city=...&wa=...)
     if (queryOverrides?.name) {
-      const cleanPhone = (queryOverrides.phone || resolved.clean_phone || '')
+      const cleanPhone = (queryOverrides.phone || '')
         .replace(/[^0-9]/g, '');
       const formattedCleanPhone = cleanPhone.startsWith('0')
         ? '62' + cleanPhone.slice(1)
         : cleanPhone.startsWith('62')
         ? cleanPhone
-        : cleanPhone ? '62' + cleanPhone : resolved.clean_phone;
+        : cleanPhone ? '62' + cleanPhone : '6281234567890';
+
+      const cityName = queryOverrides.city || 'Indonesia';
+      const addressVal = queryOverrides.address || (queryOverrides.city ? `${queryOverrides.city}, Indonesia` : 'Indonesia');
 
       resolved = {
-        ...resolved,
-        name: queryOverrides.name || resolved.name,
-        city: queryOverrides.city || resolved.city,
-        phone: queryOverrides.phone || resolved.phone,
+        slug: queryOverrides.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+        name: queryOverrides.name,
+        city: cityName,
+        province: cityName,
+        phone: queryOverrides.phone || '+62 812 3456 7890',
         clean_phone: formattedCleanPhone,
-        wa_link: formattedCleanPhone ? `https://wa.me/${formattedCleanPhone}` : resolved.wa_link,
-        rating: queryOverrides.rating ? parseFloat(queryOverrides.rating) : resolved.rating,
-        reviews: queryOverrides.reviews ? parseInt(queryOverrides.reviews, 10) : resolved.reviews,
-        address: queryOverrides.address || resolved.address,
+        wa_link: `https://wa.me/${formattedCleanPhone}`,
+        rating: queryOverrides.rating ? parseFloat(queryOverrides.rating) : 4.8,
+        reviews: queryOverrides.reviews ? parseInt(queryOverrides.reviews, 10) : 1250,
+        address: addressVal,
         isPersonalized: true,
       };
     }

@@ -18,28 +18,28 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "AYANA Estate | Luxury Oceanfront Sanctuary & Cliffside Villas - Bali & Beyond",
+  title: "Luxury Sanctuary & Hotel Collection | Official Direct Reservations",
   description:
-    "Discover AYANA Estate: Bali's iconic 90-hectare clifftop luxury sanctuary. Featuring The Ocean Villas, Rock Bar, Thalassotherapy Seawater Pool, and private Kubu Beach. Book direct for guaranteed best rates and exclusive VIP privileges.",
+    "Experience world-class luxury sanctuaries, oceanfront suites, panoramic rooftop dining, and rejuvenating Thalasso spas. Book direct for guaranteed best rates and VIP guest privileges.",
   keywords: [
-    "AYANA Bali",
-    "Luxury Resort Bali",
-    "Rock Bar Bali",
-    "Oceanfront Villas Jimbaran",
-    "Aquatonic Seawater Spa",
-    "Bali Luxury Hotel",
-    "Direct Booking Hotel",
+    "Luxury Resort Collection",
+    "Boutique Luxury Hotels",
+    "Oceanfront Villas",
+    "Private Suites",
+    "Sunset Lounge & Dining",
+    "Wellness Spa",
+    "Direct Booking Privileges",
   ],
   openGraph: {
-    title: "AYANA Estate | World-Class Luxury Sanctuary in Bali & Beyond",
+    title: "Luxury Sanctuary & Hotel Collection | Official Direct Reservations",
     description:
-      "Sacred ocean cliffs, 26 dining destinations, the world-famous Rock Bar, and private cliffside plunge pool villas.",
+      "Scenic cliffside views, curated fine dining, tranquil infinity pools, and bespoke luxury suites. Guaranteed best rates.",
     images: [
       {
         url: "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1600&q=80",
         width: 1600,
         height: 900,
-        alt: "AYANA Oceanfront Clifftop Infinity Pool",
+        alt: "Luxury Oceanfront Sanctuary Resort",
       },
     ],
     type: "website",

@@ -2,9 +2,8 @@
 
 import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { HotelProvider } from '@/context/HotelContext';
+import { HotelProvider, useHotel } from '@/context/HotelContext';
 import { PitchBanner } from '@/components/PitchBanner';
-import { TopPrivilegeBar } from '@/components/TopPrivilegeBar';
 import { MainHeader } from '@/components/MainHeader';
 import { HeroSection } from '@/components/HeroSection';
 import { DirectBenefits } from '@/components/DirectBenefits';
@@ -28,6 +27,7 @@ interface HotelPageClientProps {
 }
 
 function HotelPageInner() {
+  const { hotel } = useHotel();
   const [currency, setCurrency] = useState<string>('USD');
   const [selectedProperty, setSelectedProperty] = useState<string>('all');
 
@@ -88,8 +88,8 @@ function HotelPageInner() {
   const handleClaimOffer = (offer: SpecialOffer) => {
     setBookingInitialParams((prev) => ({
       ...prev,
-      property: 'The Villas at AYANA Resort',
-      roomName: offer.id === 'honeymoon' ? 'One-Bedroom Ocean Front Cliff Villa' : 'RIMBA Canopy Forest Suite',
+      property: hotel.isPersonalized ? `${hotel.name} Royal Villas` : 'The Royal Villas',
+      roomName: offer.id === 'honeymoon' ? 'One-Bedroom Luxury Cliff Villa' : 'Executive Grand Suite',
     }));
     setIsReserveOpen(true);
   };
@@ -107,21 +107,10 @@ function HotelPageInner() {
       {/* 0. Pitch Banner (Shown when customized via slug or query params) */}
       <PitchBanner />
 
-      {/* 1. Top Privilege Bar (Currency & Destination) */}
-      <TopPrivilegeBar
-        currentCurrency={currency}
-        onCurrencyChange={(curr) => {
-          setCurrency(curr);
-          showToast(`Mata uang diperbarui ke ${curr}`);
-        }}
-        selectedProperty={selectedProperty}
-        onPropertyChange={(prop) => setSelectedProperty(prop)}
-      />
-
-      {/* 2. Main Luxury Header */}
+      {/* 1. Main Luxury Header */}
       <MainHeader onOpenReserve={() => setIsReserveOpen(true)} />
 
-      {/* 3. Hero Section with Background Slider & Embedded Booking Bar */}
+      {/* 2. Hero Section with Background Slider & Embedded Booking Bar */}
       <HeroSection
         onCheckAvailability={handleCheckAvailability}
         selectedProperty={selectedProperty}

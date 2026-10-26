@@ -15,7 +15,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -28,25 +28,25 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
   return (
     <>
       <header
-        className={`sticky top-[31px] left-0 w-full z-40 transition-all duration-300 ${
+        className={`sticky top-0 left-0 w-full z-40 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#FAF8F5]/98 backdrop-blur-xl border-b border-[#E2DBD0] shadow-sm py-2.5 sm:py-3'
-            : 'bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#EFEAE0] py-3 sm:py-3.5'
+            ? 'bg-[#FAF8F5]/98 backdrop-blur-xl border-b border-[#E2DBD0] shadow-sm py-2.5'
+            : 'bg-[#FAF8F5]/95 backdrop-blur-md border-b border-[#EFEAE0] py-3'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
-          {/* Left: Brand Logo & Identity */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-nowrap items-center justify-between gap-3 sm:gap-4">
+          {/* Left: Brand Logo & Identity (Compact, Natural Spacing, Never Wraps) */}
           <a
             href="#hero"
-            className="flex items-center gap-2.5 sm:gap-3 group min-w-0 flex-shrink-0 max-w-[200px] sm:max-w-[260px] lg:max-w-[300px]"
+            className="flex items-center gap-2 sm:gap-2.5 group min-w-0 flex-shrink-0 max-w-[200px] sm:max-w-[280px] lg:max-w-[340px] xl:max-w-[420px]"
           >
-            <div className="w-7 h-7 sm:w-8 sm:h-8 text-[#A37A24] transition-transform duration-500 group-hover:scale-105 flex-shrink-0">
+            <div className="w-6 h-6 sm:w-7 sm:h-7 text-[#A37A24] transition-transform duration-300 group-hover:scale-105 flex-shrink-0">
               <svg viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                <path d="M50 0L65 30H35L50 0Z" fill="url(#goldGradHeader)" />
-                <path d="M20 35L35 65H5L20 35Z" fill="url(#goldGradHeader)" opacity="0.85" />
-                <path d="M80 35L95 65H65L80 35Z" fill="url(#goldGradHeader)" opacity="0.85" />
+                <path d="M50 0L65 30H35L50 0Z" fill="url(#goldGradHdr)" />
+                <path d="M20 35L35 65H5L20 35Z" fill="url(#goldGradHdr)" opacity="0.85" />
+                <path d="M80 35L95 65H65L80 35Z" fill="url(#goldGradHdr)" opacity="0.85" />
                 <defs>
-                  <linearGradient id="goldGradHeader" x1="0" y1="0" x2="100" y2="70" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="goldGradHdr" x1="0" y1="0" x2="100" y2="70" gradientUnits="userSpaceOnUse">
                     <stop stopColor="#D9A83E" />
                     <stop offset="0.5" stopColor="#B88E38" />
                     <stop offset="1" stopColor="#7A5914" />
@@ -55,101 +55,100 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
               </svg>
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="font-serif text-lg sm:text-xl lg:text-[22px] font-bold tracking-[0.04em] text-stone-900 leading-tight truncate">
+              <span className="font-serif text-base sm:text-lg lg:text-xl font-bold tracking-tight text-stone-900 leading-tight truncate">
                 {hotel.name}
               </span>
-              <span className="text-[9px] tracking-[0.22em] text-[#855F16] font-bold mt-0.5 truncate uppercase">
+              <span className="text-[9px] tracking-wider text-[#855F16] font-semibold truncate uppercase mt-0.5">
                 {hotel.city} • INDONESIA
               </span>
             </div>
           </a>
 
-          {/* Center: Desktop Navigation (Clean, Spacious, Single-line, No Wrapping) */}
-          <nav className="hidden xl:flex items-center gap-6 2xl:gap-8">
+          {/* Center: Desktop Navigation (Compact, Single-Line, Never Wraps) */}
+          <nav className="hidden lg:flex items-center gap-3.5 xl:gap-7 flex-shrink-0">
             <a
               href="#properties"
-              className="text-[13px] tracking-[0.06em] font-medium text-stone-700 hover:text-[#A37A24] transition-colors whitespace-nowrap uppercase py-1 relative group"
+              className="text-xs xl:text-[13px] tracking-wider font-semibold text-stone-700 hover:text-[#A37A24] transition-colors whitespace-nowrap uppercase py-1 relative group"
             >
               Collection
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A37A24] transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
               href="#rooms"
-              className="text-[13px] tracking-[0.06em] font-medium text-stone-700 hover:text-[#A37A24] transition-colors whitespace-nowrap uppercase py-1 relative group"
+              className="text-xs xl:text-[13px] tracking-wider font-semibold text-stone-700 hover:text-[#A37A24] transition-colors whitespace-nowrap uppercase py-1 relative group"
             >
-              Villas &amp; Suites
+              Suites
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A37A24] transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
               href="#dining"
-              className="text-[13px] tracking-[0.06em] font-medium text-stone-700 hover:text-[#A37A24] transition-colors whitespace-nowrap uppercase py-1 relative group"
+              className="text-xs xl:text-[13px] tracking-wider font-semibold text-stone-700 hover:text-[#A37A24] transition-colors whitespace-nowrap uppercase py-1 relative group"
             >
-              Dining &amp; Bar
+              Dining
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A37A24] transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
               href="#wellness"
-              className="text-[13px] tracking-[0.06em] font-medium text-stone-700 hover:text-[#A37A24] transition-colors whitespace-nowrap uppercase py-1 relative group"
+              className="text-xs xl:text-[13px] tracking-wider font-semibold text-stone-700 hover:text-[#A37A24] transition-colors whitespace-nowrap uppercase py-1 relative group"
             >
-              Wellness Spa
+              Wellness
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A37A24] transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
               href="#experiences"
-              className="text-[13px] tracking-[0.06em] font-medium text-stone-700 hover:text-[#A37A24] transition-colors whitespace-nowrap uppercase py-1 relative group"
+              className="text-xs xl:text-[13px] tracking-wider font-semibold text-stone-700 hover:text-[#A37A24] transition-colors whitespace-nowrap uppercase py-1 relative group"
             >
               Experiences
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A37A24] transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
               href="#offers"
-              className="text-[13px] tracking-[0.06em] font-semibold text-[#855F16] hover:text-black transition-colors whitespace-nowrap uppercase flex items-center gap-1 py-1"
+              className="text-xs xl:text-[13px] tracking-wider font-bold text-[#855F16] hover:text-black transition-colors whitespace-nowrap uppercase flex items-center gap-1 py-1"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#A37A24]" />
               Offers
             </a>
           </nav>
 
-          {/* Right: Actions (Sleek VIP Concierge & Reserve CTA) */}
+          {/* Right: Actions */}
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-            {/* VIP Concierge Link */}
+            {/* WhatsApp VIP Concierge Button */}
             <a
               href={hotelWaUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden lg:inline-flex items-center gap-2 text-stone-700 hover:text-stone-900 border border-stone-300/80 hover:border-emerald-500 hover:bg-emerald-50/60 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap shadow-2xs"
+              className="hidden xl:inline-flex items-center gap-1.5 text-stone-700 hover:text-stone-900 border border-stone-300 hover:border-emerald-500 hover:bg-emerald-50/70 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap shadow-2xs"
               title="Chat with Reservations Host"
             >
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
               <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
-              <span>VIP Concierge</span>
+              <span>WhatsApp</span>
             </a>
 
-            {/* Primary CTA Button */}
+            {/* Primary Reserve CTA Button */}
             <button
               onClick={onOpenReserve}
-              className="inline-flex items-center gap-2 gold-gradient-bg text-black hover:brightness-105 font-bold text-[11px] sm:text-xs tracking-[0.1em] uppercase px-4 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-95 whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 gold-gradient-bg text-black hover:brightness-105 font-bold text-[11px] sm:text-xs tracking-wider uppercase px-4 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-95 whitespace-nowrap"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-black"></span>
               <span>RESERVE NOW</span>
             </button>
 
-            {/* Mobile / Tablet Menu Button (Visible below xl) */}
+            {/* Mobile / Tablet Menu Button (Visible below lg) */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="xl:hidden inline-flex items-center gap-1.5 text-stone-800 hover:text-[#A37A24] p-2 -mr-1 rounded-lg hover:bg-stone-200/50 active:bg-stone-200 transition-colors"
+              className="lg:hidden inline-flex items-center gap-1 text-stone-800 hover:text-[#A37A24] p-2 rounded-lg hover:bg-stone-200/50 active:bg-stone-200 transition-colors"
               aria-label="Open Navigation Menu"
             >
               <Menu className="w-5 h-5" />
-              <span className="hidden sm:inline text-xs font-bold tracking-wider uppercase">Menu</span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile / Tablet Drawer Menu */}
+      {/* Mobile Drawer Menu */}
       <div
-        className={`fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 transition-opacity duration-300 xl:hidden ${
+        className={`fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 transition-opacity duration-300 lg:hidden ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setMobileMenuOpen(false)}
@@ -163,10 +162,10 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ onOpenReserve }) => {
           <div>
             <div className="flex items-center justify-between pb-4 border-b border-[#E8E3D8]">
               <div className="flex flex-col min-w-0 pr-2">
-                <span className="font-serif text-xl sm:text-2xl font-bold tracking-wider text-stone-900 truncate">
+                <span className="font-serif text-lg font-bold tracking-tight text-stone-900 truncate">
                   {hotel.name}
                 </span>
-                <span className="text-[10px] tracking-[0.25em] text-[#855F16] font-bold uppercase truncate">
+                <span className="text-[10px] tracking-wider text-[#855F16] font-semibold uppercase truncate">
                   {hotel.city} • INDONESIA
                 </span>
               </div>

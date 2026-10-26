@@ -8,7 +8,7 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return Object.keys(hotelsDataRaw).slice(0, 50).map((slug) => ({
+  return Object.keys(hotelsDataRaw).slice(0, 10).map((slug) => ({
     slug,
   }));
 }

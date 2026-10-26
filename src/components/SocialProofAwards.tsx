@@ -46,7 +46,10 @@ export const SocialProofAwards: React.FC = () => {
           {hotel.isPersonalized && (
             <div className="mt-3 inline-flex items-center gap-2 bg-[#A37A24]/10 text-[#855F16] font-semibold text-xs sm:text-sm px-4 py-1.5 rounded-full border border-[#A37A24]/20">
               <MapPin className="w-4 h-4 text-[#855F16]" />
-              <span>{hotel.city}, {hotel.province}</span>
+              <span>
+                {hotel.city}
+                {hotel.province && hotel.province !== hotel.city ? `, ${hotel.province}` : ''}
+              </span>
               <span>•</span>
               <span className="flex items-center gap-1">
                 <Star className="w-3.5 h-3.5 fill-[#855F16]" />
