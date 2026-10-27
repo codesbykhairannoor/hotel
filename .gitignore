@@ -41,5 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 # data & excel files
-*.xlsx
 listing.xlsx
+HOTEL_PITCH_PROSPEK_LEADS.xlsx
+!BATCH_1_100_LEADS_HOTEL_LUXURY_PITCH_PROSPEK.xlsx
